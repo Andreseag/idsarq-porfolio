@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import LogoSVG from "./LogoSVG";
 
@@ -16,51 +16,79 @@ export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
 
+  const isScrollingRef = useRef(false);
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    // Espera al primer frame renderizado para capturar la posición exacta del navegador
+    const checkInitialScroll = requestAnimationFrame(handleScroll);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      cancelAnimationFrame(checkInitialScroll);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   useEffect(() => {
-    const sections = navItems
-      .map((item) => document.getElementById(item.id))
-      .filter((el): el is HTMLElement => !!el);
+    // Retrasamos ligeramente o esperamos al siguiente tick para asegurar que el DOM está listo
+    const timer = setTimeout(() => {
+      const sections = navItems
+        .map((item) => document.getElementById(item.id))
+        .filter((el): el is HTMLElement => !!el);
 
-    if (sections.length === 0) return;
+      if (sections.length === 0) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveSection(entry.target.id);
-        });
-      },
-      { threshold: 0.3 }
-    );
+      const observer = new IntersectionObserver(
+        (entries) => {
+          // Si el usuario clickeó en un botón, ignoramos los cambios temporales del observer
+          if (isScrollingRef.current) return;
 
-    sections.forEach((section) => observer.observe(section));
-    return () => sections.forEach((section) => observer.unobserve(section));
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) setActiveSection(entry.target.id);
+          });
+        },
+        {
+          rootMargin: "-20% 0px -60% 0px", // Ajusta el área de detección a la parte superior/centro de la pantalla
+          threshold: 0,
+        },
+      );
+
+      sections.forEach((section) => observer.observe(section));
+
+      return () => sections.forEach((section) => observer.unobserve(section));
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const scrollToSection = (id: string) => {
-    // If we're not on the homepage, navigate back to it first.
     if (window.location.pathname !== "/") {
       window.location.href = `/#${id}`;
       return;
     }
+
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      isScrollingRef.current = true;
       setActiveSection(id);
+      setMobileOpen(false);
+
+      element.scrollIntoView({ behavior: "smooth" });
+
+      // Desbloqueamos el observer tras terminar la animación de scroll (~800ms)
+      setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 800);
     }
-    setMobileOpen(false);
   };
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        // scrolled ? "glass-dark shadow-lg" : "bg-transparent"
-        "glass-dark shadow-lg"
+        scrolled ? "glass-dark shadow-lg" : "bg-transparent"
       }`}>
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">

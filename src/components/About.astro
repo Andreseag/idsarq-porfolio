@@ -7,10 +7,26 @@ const stats = [
 ];
 
 const values = [
-  { icon: "◆", title: "Excelencia", desc: "Perseguimos la perfección en cada detalle, desde el concepto hasta la entrega final." },
-  { icon: "◈", title: "Sostenibilidad", desc: "Diseñamos con responsabilidad ambiental, integrando tecnologías verdes y materiales ecoamigables." },
-  { icon: "◇", title: "Innovación", desc: "Exploramos constantemente nuevas formas, materiales y tecnologías para crear espacios únicos." },
-  { icon: "◊", title: "Colaboración", desc: "Trabajamos en estrecha colaboración con nuestros clientes para materializar su visión." },
+  {
+    title: "Excelencia",
+    desc: "Perseguimos la perfección en cada detalle, desde el concepto hasta la entrega final.",
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 6.8L21 11l-6.6 2.2L12 20l-2.4-6.8L3 11l6.6-2.2L12 2z"/></svg>`,
+  },
+  {
+    title: "Sostenibilidad",
+    desc: "Diseñamos con responsabilidad ambiental, integrando tecnologías verdes y materiales ecoamigables.",
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c4 2 7 6 7 10.5A7 7 0 0 1 5 13.5C5 9 8 5 12 3z"/><path d="M12 21v-7"/></svg>`,
+  },
+  {
+    title: "Innovación",
+    desc: "Exploramos constantemente nuevas formas, materiales y tecnologías para crear espacios únicos.",
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.6.55 1 1.35 1 2.2V16h6v-.3c0-.85.4-1.65 1-2.2A6 6 0 0 0 12 3z"/></svg>`,
+  },
+  {
+    title: "Colaboración",
+    desc: "Trabajamos en estrecha colaboración con nuestros clientes para materializar su visión.",
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2.5 20c.6-3 3-5 5.5-5s4.9 2 5.5 5"/><path d="M10.5 20c.6-3 3-5 5.5-5s4.9 2 5.5 5"/></svg>`,
+  },
 ];
 
 const team = [
@@ -72,7 +88,10 @@ const team = [
             style={`transition-delay: ${i * 120}ms`}
             class="group p-8 rounded-2xl border border-brand-dark/10 hover:border-brand-dark/20 hover:bg-brand-dark/[0.02] transition-all duration-500 hover-lift"
           >
-            <div class="text-3xl text-brand-accent mb-4">{value.icon}</div>
+            <div
+              class="w-12 h-12 mb-5 rounded-xl bg-brand-dark/5 text-brand-dark flex items-center justify-center [&>svg]:w-6 [&>svg]:h-6 group-hover:bg-brand-dark group-hover:text-brand-cream transition-colors duration-500"
+              set:html={value.icon}
+            />
             <h3 class="text-xl font-semibold text-brand-dark mb-3">{value.title}</h3>
             <p class="text-brand-muted text-sm leading-relaxed">{value.desc}</p>
           </div>

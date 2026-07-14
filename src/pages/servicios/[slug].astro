@@ -23,13 +23,14 @@ const related = services.filter((s) => s.slug !== service.slug).slice(0, 3);
     <section class="relative h-[60vh] min-h-[420px] flex items-end overflow-hidden">
       <div class="absolute inset-0 bg-cover bg-center" style={`background-image: url('${service.image}')`}></div>
       <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/50 to-brand-dark/30"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-brand-dark/90 via-brand-dark/10 to-brand-dark/10"></div>
       <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pb-16 w-full">
-        <a href="/#servicios" class="inline-flex items-center gap-2 text-brand-accent hover:text-brand-cream text-sm mb-6 transition-colors">
+        <a href="/#servicios" class="inline-flex items-center gap-2 text-brand-cream hover:text-brand-cream text-sm mb-6 transition-colors">
           ← Volver a servicios
         </a>
-        <div class="text-4xl mb-4">{service.icon}</div>
+        <!-- <div class="text-4xl mb-4">{service.icon}</div> -->
         <h1 class="text-4xl md:text-6xl font-light text-brand-cream leading-tight">{service.title}</h1>
-        <p class="text-brand-accent text-lg max-w-2xl mt-4">{service.shortDesc}</p>
+        <p class="text-brand-cream text-lg max-w-2xl mt-4">{service.shortDesc}</p>
       </div>
     </section>
 
