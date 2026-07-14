@@ -1,0 +1,49 @@
+---
+import { services } from "../data/services";
+---
+
+<section id="servicios" class="py-24 md:py-32 bg-brand-dark/[0.02]">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-20" data-reveal>
+      <span class="text-brand-muted text-sm font-medium tracking-[0.2em] uppercase mb-4 block">Servicios</span>
+      <h2 class="text-4xl md:text-5xl font-light text-brand-dark leading-tight mb-6">
+        Soluciones <span class="font-semibold">integrales</span>
+      </h2>
+      <p class="text-brand-muted text-lg leading-relaxed">
+        Acompañamos cada proyecto de principio a fin, desde la primera idea hasta la entrega final, con un equipo
+        multidisciplinario a tu disposición.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        services.map((service, i) => (
+          <a
+            href={`/servicios/${service.slug}`}
+            data-reveal
+            style={`transition-delay: ${(i % 3) * 120}ms`}
+            class="group block rounded-2xl border border-brand-dark/10 overflow-hidden hover-lift bg-white"
+          >
+            <div class="aspect-[16/10] img-zoom">
+              <img src={service.image} alt={service.title} class="w-full h-full object-cover" loading="lazy" />
+            </div>
+            <div class="p-8">
+              <div class="text-3xl mb-4">{service.icon}</div>
+              <h3 class="text-xl font-semibold text-brand-dark mb-3">{service.title}</h3>
+              <p class="text-brand-muted text-sm leading-relaxed mb-5">{service.shortDesc}</p>
+              <div class="flex flex-wrap gap-2 mb-5">
+                {service.features.map((feature) => (
+                  <span class="text-xs px-3 py-1 rounded-full bg-brand-dark/5 text-brand-muted">{feature}</span>
+                ))}
+              </div>
+              <span class="inline-flex items-center gap-2 text-sm font-medium text-brand-dark group-hover:gap-3 transition-all duration-300">
+                Conocer más
+                <span class="transition-transform group-hover:translate-x-1">→</span>
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

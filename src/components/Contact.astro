@@ -1,0 +1,105 @@
+---
+const info = [
+  { icon: "📍", label: "Dirección", value: "Av. Paseo de la Reforma 505, Piso 15<br /> Villanueva, Casanare" },
+  { icon: "📞", label: "Teléfono", value: "+52 (55) 5123-4567" },
+  { icon: "✉️", label: "Email", value: "hola@idsarq.arq" },
+  { icon: "🕐", label: "Horario", value: "Lunes a Viernes: 9:00 - 18:00<br />Sábados: 10:00 - 14:00" },
+];
+
+const socials = ["Instagram", "LinkedIn", "Behance", "Pinterest"];
+---
+
+<section id="contacto" class="py-24 md:py-32 bg-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="text-center mb-16" data-reveal>
+      <span class="text-brand-muted text-sm font-medium tracking-[0.2em] uppercase mb-4 block">Contacto</span>
+      <h2 class="text-4xl md:text-5xl font-light text-brand-dark mb-6">
+        Hablemos de tu <span class="font-semibold">proyecto</span>
+      </h2>
+      <p class="text-brand-muted max-w-xl mx-auto">Estamos listos para escuchar tus ideas y convertirlas en realidad.</p>
+    </div>
+    <div class="grid lg:grid-cols-2 gap-16">
+      <div data-reveal>
+        <form class="space-y-6" id="contact-form">
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-brand-dark mb-2">Nombre</label>
+              <input
+                type="text"
+                required
+                class="w-full px-4 py-3 rounded-xl border border-brand-dark/15 focus:border-brand-dark focus:ring-2 focus:ring-brand-dark/10 outline-none transition-all bg-brand-dark/[0.02]"
+                placeholder="Tu nombre"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-brand-dark mb-2">Email</label>
+              <input
+                type="email"
+                required
+                class="w-full px-4 py-3 rounded-xl border border-brand-dark/15 focus:border-brand-dark focus:ring-2 focus:ring-brand-dark/10 outline-none transition-all bg-brand-dark/[0.02]"
+                placeholder="correo@ejemplo.com"
+              />
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-brand-dark mb-2">Asunto</label>
+            <input
+              type="text"
+              class="w-full px-4 py-3 rounded-xl border border-brand-dark/15 focus:border-brand-dark focus:ring-2 focus:ring-brand-dark/10 outline-none transition-all bg-brand-dark/[0.02]"
+              placeholder="¿Sobre qué quieres hablar?"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-brand-dark mb-2">Mensaje</label>
+            <textarea
+              rows="5"
+              class="w-full px-4 py-3 rounded-xl border border-brand-dark/15 focus:border-brand-dark focus:ring-2 focus:ring-brand-dark/10 outline-none transition-all resize-none bg-brand-dark/[0.02]"
+              placeholder="Cuéntanos sobre tu proyecto..."></textarea>
+          </div>
+          <button type="submit" class="w-full cursor-pointer py-4 bg-brand-dark text-brand-cream font-medium rounded-xl hover:bg-brand-primary transition-colors">
+            Enviar mensaje
+          </button>
+        </form>
+      </div>
+      <div class="space-y-8" data-reveal>
+        <div class="bg-brand-dark/[0.02] rounded-2xl p-8 border border-brand-dark/5">
+          <h3 class="text-xl font-semibold text-brand-dark mb-6">Información de Contacto</h3>
+          <div class="space-y-4">
+            {
+              info.map((item) => (
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-lg bg-brand-dark/5 flex items-center justify-center text-brand-dark">{item.icon}</div>
+                  <div>
+                    <p class="font-medium text-brand-dark">{item.label}</p>
+                    <p class="text-brand-muted text-sm" set:html={item.value} />
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+        <div class="bg-brand-dark rounded-2xl p-8 text-center">
+          <h3 class="text-xl font-semibold text-brand-cream mb-4">Síguenos</h3>
+          <div class="flex justify-center gap-4 flex-wrap">
+            {
+              socials.map((social) => (
+                <button type="button" class="px-4 py-2 cursor-pointer bg-white/10 text-brand-cream rounded-lg text-sm hover:bg-white/20 transition-colors">
+                  {social}
+                </button>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById("contact-form");
+  form?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    alert("¡Gracias! Tu mensaje fue enviado. Nos pondremos en contacto pronto.");
+    (form as HTMLFormElement).reset();
+  });
+</script>

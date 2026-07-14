@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navigation from "../components/Navigation";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import Services from "../components/Services.astro";
+import Projects from "../components/Projects";
+import QuoteWizard from "../components/QuoteWizard";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout>
+  <div class="min-h-screen bg-white">
+    <Navigation client:load />
+    <Hero />
+    <About />
+    <Services />
+    <Projects client:visible />
+    <QuoteWizard client:visible />
+    <Contact />
+    <Footer />
+  </div>
+</Layout>

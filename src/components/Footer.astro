@@ -1,0 +1,65 @@
+---
+import LogoSVG from "./LogoSVG.astro";
+
+const navItems = [
+  { id: "inicio", label: "Inicio" },
+  { id: "nosotros", label: "Nosotros" },
+  { id: "servicios", label: "Servicios" },
+  { id: "proyectos", label: "Proyectos" },
+  { id: "cotizacion", label: "Cotización" },
+  { id: "contacto", label: "Contacto" },
+];
+
+const legal = ["Política de privacidad", "Términos de servicio", "Aviso legal"];
+---
+
+<footer class="bg-brand-dark text-brand-cream py-16">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="grid md:grid-cols-4 gap-12 mb-12">
+      <div class="md:col-span-2">
+        <a href="/" class="flex items-center gap-3 mb-6 w-fit">
+          <LogoSVG class="w-10 h-10" />
+          <div>
+            <span class="font-semibold text-lg tracking-wide">idsarq</span>
+          </div>
+        </a>
+        <p class="text-brand-accent max-w-md leading-relaxed">
+          Transformamos visiones en espacios extraordinarios. Con más de 5 años de experiencia, somos referentes en
+          arquitectura contemporánea en Latinoamérica.
+        </p>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-4">Navegación</h4>
+        <ul class="space-y-2 text-brand-accent">
+          {
+            navItems.map((item) => (
+              <li>
+                <a href={`/#${item.id}`} class="hover:text-brand-cream transition-colors">
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-semibold mb-4">Legal</h4>
+        <ul class="space-y-2 text-brand-accent">
+          {
+            legal.map((item) => (
+              <li>
+                <button type="button" class="hover:text-brand-cream transition-colors cursor-pointer">
+                  {item}
+                </button>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-brand-accent text-sm">© 2026 idsarq. Todos los derechos reservados.</p>
+      <p class="text-brand-muted text-sm">Diseñado con pasión en Villanueva, Casanare</p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,171 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navigation from "../../components/Navigation";
+import Footer from "../../components/Footer.astro";
+import { services } from "../../data/services";
+
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+const related = services.filter((s) => s.slug !== service.slug).slice(0, 3);
+---
+
+<Layout title={`${service.title} | idsarq`} description={service.shortDesc}>
+  <div class="min-h-screen bg-white">
+    <Navigation client:load /> 
+
+    <!-- Hero -->
+    <section class="relative h-[60vh] min-h-[420px] flex items-end overflow-hidden">
+      <div class="absolute inset-0 bg-cover bg-center" style={`background-image: url('${service.image}')`}></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/50 to-brand-dark/30"></div>
+      <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pb-16 w-full">
+        <a href="/#servicios" class="inline-flex items-center gap-2 text-brand-accent hover:text-brand-cream text-sm mb-6 transition-colors">
+          ← Volver a servicios
+        </a>
+        <div class="text-4xl mb-4">{service.icon}</div>
+        <h1 class="text-4xl md:text-6xl font-light text-brand-cream leading-tight">{service.title}</h1>
+        <p class="text-brand-accent text-lg max-w-2xl mt-4">{service.shortDesc}</p>
+      </div>
+    </section>
+
+    <!-- Descripción y features -->
+    <section class="py-20 md:py-28">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-3 gap-16">
+        <div class="lg:col-span-2">
+          <span class="text-brand-muted text-sm font-medium tracking-[0.2em] uppercase mb-4 block">Sobre el servicio</span>
+          <h2 class="text-3xl md:text-4xl font-light text-brand-dark mb-6">
+            Un enfoque <span class="font-semibold">integral</span>
+          </h2>
+          <p class="text-brand-muted text-lg leading-relaxed mb-12">{service.desc}</p>
+
+          <h3 class="text-2xl font-semibold text-brand-dark mb-8">Nuestro proceso</h3>
+          <div class="space-y-0">
+            {
+              service.process.map((step, i) => (
+                <div class="flex gap-6 relative">
+                  <div class="flex flex-col items-center">
+                    <div class="w-8 h-8 rounded-full bg-brand-dark text-brand-cream text-sm flex items-center justify-center font-medium shrink-0">
+                      {i + 1}
+                    </div>
+                    {i < service.process.length - 1 && <div class="w-px flex-1 bg-brand-dark/15" />}
+                  </div>
+                  <div class="pb-10">
+                    <h4 class="text-brand-dark font-semibold mb-1.5">{step.title}</h4>
+                    <p class="text-brand-muted text-sm leading-relaxed">{step.desc}</p>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="bg-brand-dark/[0.02] rounded-2xl p-8 border border-brand-dark/5">
+            <h4 class="text-brand-dark font-semibold mb-5">Incluye</h4>
+            <ul class="space-y-3">
+              {
+                service.features.map((feature) => (
+                  <li class="flex items-center gap-3 text-sm text-brand-dark">
+                    <span class="w-5 h-5 rounded-full bg-brand-dark/10 flex items-center justify-center text-xs shrink-0">✓</span>
+                    {feature}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div class="bg-brand-dark/[0.02] rounded-2xl p-8 border border-brand-dark/5">
+            <h4 class="text-brand-dark font-semibold mb-5">Beneficios</h4>
+            <ul class="space-y-3">
+              {
+                service.benefits.map((benefit) => (
+                  <li class="flex items-start gap-3 text-sm text-brand-muted leading-relaxed">
+                    <span class="text-brand-accent mt-0.5">◆</span>
+                    {benefit}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <a
+            href="/#cotizacion"
+            class="block text-center w-full py-4 bg-brand-dark text-brand-cream font-medium rounded-xl hover:bg-brand-primary transition-colors"
+          >
+            Solicitar cotización
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Galería -->
+    <section class="pb-20 md:pb-28">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <h3 class="text-2xl font-semibold text-brand-dark mb-8">Galería</h3>
+        <div class="grid md:grid-cols-3 gap-6">
+          {
+            service.gallery.map((img) => (
+              <div class="aspect-[4/3] rounded-2xl overflow-hidden img-zoom">
+                <img src={img} alt={service.title} class="w-full h-full object-cover" loading="lazy" />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="pb-24 md:pb-28 bg-brand-dark/[0.02] py-20">
+      <div class="max-w-3xl mx-auto px-6 lg:px-8">
+        <h3 class="text-2xl md:text-3xl font-light text-brand-dark mb-10 text-center">
+          Preguntas <span class="font-semibold">frecuentes</span>
+        </h3>
+        <div class="space-y-4">
+          {
+            service.faq.map((item) => (
+              <details class="group bg-white rounded-xl border border-brand-dark/10 p-6 open:shadow-md transition-shadow">
+                <summary class="flex items-center justify-between cursor-pointer text-brand-dark font-medium list-none">
+                  {item.question}
+                  <span class="text-brand-muted group-open:rotate-45 transition-transform text-xl leading-none">+</span>
+                </summary>
+                <p class="text-brand-muted text-sm leading-relaxed mt-4">{item.answer}</p>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Servicios relacionados -->
+    <section class="py-20 md:py-28">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <h3 class="text-2xl font-semibold text-brand-dark mb-8">Otros servicios</h3>
+        <div class="grid md:grid-cols-3 gap-8">
+          {
+            related.map((s) => (
+              <a href={`/servicios/${s.slug}`} class="group block rounded-2xl border border-brand-dark/10 overflow-hidden hover-lift bg-white">
+                <div class="aspect-[16/10] img-zoom">
+                  <img src={s.image} alt={s.title} class="w-full h-full object-cover" loading="lazy" />
+                </div>
+                <div class="p-6">
+                  <div class="text-2xl mb-2">{s.icon}</div>
+                  <h4 class="text-lg font-semibold text-brand-dark mb-1">{s.title}</h4>
+                  <span class="text-sm text-brand-primary inline-flex items-center gap-2 group-hover:gap-3 transition-all">
+                    Conocer más <span class="transition-transform group-hover:translate-x-1">→</span>
+                  </span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </div>
+</Layout>
