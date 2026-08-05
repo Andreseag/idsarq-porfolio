@@ -17,7 +17,10 @@ export default function LoginForm() {
     e.preventDefault();
     setError(null);
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     setLoading(false);
     if (error) {
       setError("Credenciales incorrectas o usuario no autorizado.");
@@ -28,13 +31,25 @@ export default function LoginForm() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-brand-dark px-6">
-      <form onSubmit={handleSubmit} className="w-full max-w-sm bg-white rounded-2xl p-8 shadow-2xl">
-        <h1 className="text-2xl font-semibold text-brand-dark mb-1">Panel Estudio K</h1>
-        <p className="text-brand-muted text-sm mb-8">Acceso exclusivo para el equipo</p>
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-sm bg-white rounded-2xl p-8 shadow-2xl">
+        <h1 className="text-2xl font-semibold text-brand-dark mb-1">
+          Panel IDSARQ
+        </h1>
+        <p className="text-brand-muted text-sm mb-8">
+          Acceso exclusivo para el equipo
+        </p>
 
-        {error && <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-sm text-red-600">{error}</div>}
+        {error && (
+          <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-sm text-red-600">
+            {error}
+          </div>
+        )}
 
-        <label className="block text-sm font-medium text-brand-dark mb-2">Email</label>
+        <label className="block text-sm font-medium text-brand-dark mb-2">
+          Email
+        </label>
         <input
           type="email"
           required
@@ -44,7 +59,9 @@ export default function LoginForm() {
           placeholder="tu@estudiok.arq"
         />
 
-        <label className="block text-sm font-medium text-brand-dark mb-2">Contraseña</label>
+        <label className="block text-sm font-medium text-brand-dark mb-2">
+          Contraseña
+        </label>
         <input
           type="password"
           required
@@ -57,8 +74,7 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 bg-brand-dark text-brand-cream font-medium rounded-xl hover:bg-brand-primary transition-colors disabled:opacity-60"
-        >
+          className="w-full py-3 bg-brand-dark text-brand-cream font-medium rounded-xl hover:bg-brand-primary transition-colors disabled:opacity-60">
           {loading ? "Entrando..." : "Entrar"}
         </button>
       </form>
