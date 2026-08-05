@@ -1,0 +1,68 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+interface Props {
+  title: string;
+  active: "dashboard" | "leads" | "proyectos";
+}
+
+const { title, active } = Astro.props;
+
+const links = [
+  { id: "dashboard", href: "/admin", label: "Dashboard", icon: "📊" },
+  { id: "leads", href: "/admin/leads", label: "Oportunidades", icon: "🧾" },
+  { id: "proyectos", href: "/admin/proyectos", label: "Proyectos", icon: "🏗️" },
+];
+---
+
+<Layout title={`${title} | Panel Estudio K`}>
+  <div class="min-h-screen bg-brand-dark/[0.02] md:flex">
+    <aside class="w-64 shrink-0 bg-brand-dark text-brand-cream h-screen p-6 hidden md:flex md:flex-col fixed top-0 left-0 z-20 overflow-y-auto">
+      <a href="/" class="text-lg font-semibold mb-1"> IDSARQ</a>
+      <p class="text-xs text-brand-accent mb-10">Panel administrativo</p>
+      <nav class="space-y-1">
+        {
+          links.map((link) => (
+            <a
+              href={link.href}
+              class={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                active === link.id ? "bg-white/10 text-brand-cream" : "text-brand-accent hover:bg-white/5 hover:text-brand-cream"
+              }`}
+            >
+              <span>{link.icon}</span>
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+      <div class="mt-auto pt-6 border-t border-white/10">
+        <button id="admin-logout" class="text-sm text-brand-accent hover:text-brand-cream transition-colors">
+          ← Cerrar sesión
+        </button>
+      </div>
+    </aside>
+
+    <div class="flex-1 min-w-0 md:ml-64">
+      <header class="md:hidden flex items-center justify-between p-4 bg-brand-dark text-brand-cream">
+        <a href="/" class="font-semibold">ESTUDIO K</a>
+        <nav class="flex gap-3 text-sm">
+          {
+            links.map((link) => (
+              <a href={link.href} class={active === link.id ? "text-brand-cream underline" : "text-brand-accent"}>
+                {link.label}
+              </a>
+            ))
+          }
+        </nav>
+      </header>
+      <main class="p-6 md:p-10">
+        <slot />
+      </main>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { signOut } from "../../lib/useRequireAuth";
+  document.getElementById("admin-logout")?.addEventListener("click", () => signOut());
+</script>

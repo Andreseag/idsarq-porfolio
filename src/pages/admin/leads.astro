@@ -1,0 +1,8 @@
+---
+import AdminLayout from "../../components/admin/AdminLayout.astro";
+import LeadsPanel from "../../components/admin/LeadsPanel";
+---
+
+<AdminLayout title="Leads" active="leads">
+  <LeadsPanel client:load />
+</AdminLayout>

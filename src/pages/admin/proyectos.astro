@@ -1,0 +1,8 @@
+---
+import AdminLayout from "../../components/admin/AdminLayout.astro";
+import ProjectsPanel from "../../components/admin/ProjectsPanel";
+---
+
+<AdminLayout title="Proyectos" active="proyectos">
+  <ProjectsPanel client:load />
+</AdminLayout>
